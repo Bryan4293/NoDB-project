@@ -38,5 +38,6 @@ button{
     font-weight:bold;
 }
 body{
-    background-image: url(./components/Pic/background-dark-delicate-325703.jpg)
+    background-image: url(./components/Pic/background-dark-delicate-325703.jpg);
+    background-size: 100%
 }

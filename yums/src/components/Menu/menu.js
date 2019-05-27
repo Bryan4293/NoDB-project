@@ -11,7 +11,7 @@ function Menu(props){
                   <h2>{props.menu.name}</h2>
                   <h2>$ {props.menu.price}.00</h2>
                 </div>
-                <button onClick={() => props.addToCheck(props.menu.id)}>Purchase</button>
+                <button onClick={() => props.addToCheck(props.menu)}>Purchase</button>
             </div>
             </article>
     )

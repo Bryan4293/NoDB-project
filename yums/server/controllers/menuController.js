@@ -57,15 +57,21 @@ const menu = [
     },
 
 ]
+let id =0;
 
 const getMenu = ((req, res) => {
     res.json(menu)
 });
-const getCheck = ((req, res)=> {
+
+const deleteCheck =((req,res) => {
+    const deleteID = req.params.id;
+    menuIndex = menu.findIndex(chkOut => chkOut.id == deleteID);
+    menu.splice(menuIndex, 1)
     res.json(menu)
-})
+});
+
 
 module.exports ={
 getMenu,
-getCheck
+deleteCheck,
 };

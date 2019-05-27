@@ -4,7 +4,7 @@ const menuController = require("./controllers/menuController")
 app.use(express.json());
 
 app.get("/api/menu", menuController.getMenu)
-app.get("/api/checkOut",menuController.getCheck )
+app.delete("/api/checkOut/:id", menuController.deleteCheck)
 
 const PORT = 8888;
 app.listen(PORT, ()=> {

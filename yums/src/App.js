@@ -17,6 +17,7 @@ class App extends Component {
     this.navClick = this.navClick.bind(this)
     this.addToCheck = this.addToCheck.bind(this)
     this.removeItem = this.removeItem.bind(this)
+    this.updateCheck = this.updateCheck.bind(this)
   }
 
   componentDidMount() {
@@ -30,12 +31,17 @@ class App extends Component {
     })
   }
   addToCheck(item){
-    this.setState({
+      this.setState({
       chkOut: [...this.state.chkOut, item]
     })
   }
 
+  updateCheck(update){
+    this.setState({chkOut : update})
+  }
+
   removeItem(index){
+ 
     let deleteItem = this.state.chkOut.slice();
     deleteItem.splice(index, 1);
     this.setState({
@@ -57,12 +63,15 @@ class App extends Component {
 
   render(){
     const {menu, chkOut, showFood} = this.state;
+    
     let menuDisplay = menu.map((menu, index) => <Menu key={index}
       addToCheck={this.addToCheck}
       menu={menu}/>)
-    let checkDisplay = chkOut.map((chkOut, index) => <CheckOut key={index}
-    removeItem={this.removeItem}
+    
+    let checkDisplay = chkOut.map((chkOut, index) => <CheckOut 
+      removeItem={this.removeItem}
       chkOut={chkOut}/>)
+    
     return (
       <div >
         <header >
