@@ -41,3 +41,6 @@ body{
     background-image: url(./components/Pic/background-dark-delicate-325703.jpg);
     background-size: 100%
 }
+h3{
+    margin-top: 0;
+}

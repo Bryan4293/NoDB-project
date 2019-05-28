@@ -12,12 +12,15 @@ class App extends Component {
     this.state= {
       menu: [],
       chkOut: [],
-      showFood: false
+      showFood: false,
+      comment: "",
+      userComment:''
     }
     this.navClick = this.navClick.bind(this)
     this.addToCheck = this.addToCheck.bind(this)
     this.removeItem = this.removeItem.bind(this)
     this.updateCheck = this.updateCheck.bind(this)
+    this.handleComment= this.handleComment.bind(this)
   }
 
   componentDidMount() {
@@ -30,6 +33,25 @@ class App extends Component {
       console.log(error)
     })
   }
+
+  addComment(dish){
+    // console.log(e)
+    // e.preventDefault();
+    console.log(dish)
+    axios
+          .post("/api/checkOut/"+dish,{
+            comment: this.state.comment
+          })
+          .then(res =>{
+            console.log(res.data)
+            this.setState({menu: res.data, userComment: this.state.comment})
+            this.handleComment()
+          })
+          .catch(error =>{
+            console.log(error)
+          })
+  }
+
   addToCheck(item){
       this.setState({
       chkOut: [...this.state.chkOut, item]
@@ -60,6 +82,9 @@ class App extends Component {
       })
     }
   }
+  handleComment(val){
+    this.setState({comment: val})
+  }
 
   render(){
     const {menu, chkOut, showFood} = this.state;
@@ -67,10 +92,7 @@ class App extends Component {
     let menuDisplay = menu.map((menu, index) => <Menu key={index}
       addToCheck={this.addToCheck}
       menu={menu}/>)
-    
-    let checkDisplay = chkOut.map((chkOut, index) => <CheckOut 
-      removeItem={this.removeItem}
-      chkOut={chkOut}/>)
+  
     
     return (
       <div >
@@ -78,7 +100,9 @@ class App extends Component {
           <NavBar navClick={this.navClick}/>
         </header>
         <section className='menu_display'>
-          {showFood ? (checkDisplay) : (menuDisplay)}
+          {showFood ? 
+           <CheckOut removeItem={this.removeItem} chkOut={chkOut} addComment={e=> this.addComment(e)} handleComment={this.handleComment} comment={this.state.userComment}/> 
+            : (menuDisplay)}
         </section>
       </div>
     );

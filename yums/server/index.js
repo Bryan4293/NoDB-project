@@ -3,8 +3,11 @@ const app = express();
 const menuController = require("./controllers/menuController")
 app.use(express.json());
 
-app.get("/api/menu", menuController.getMenu)
-app.delete("/api/checkOut/:id", menuController.deleteCheck)
+const url1= "/api/menu"
+const url2= "/api/checkOut"
+
+app.get(url1, menuController.getMenu)
+app.post(`${url2}/:dish`, menuController.postComment)
 
 const PORT = 8888;
 app.listen(PORT, ()=> {
