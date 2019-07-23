@@ -35,8 +35,6 @@ class App extends Component {
   }
 
   addComment(dish){
-    // console.log(e)
-    // e.preventDefault();
     console.log(dish)
     axios
           .post("/api/checkOut/"+dish,{
@@ -50,6 +48,56 @@ class App extends Component {
           .catch(error =>{
             console.log(error)
           })
+  }
+
+  deleteComment(dish){
+ 
+    axios
+        .delete(`/api/checkOut/${dish}`)
+        // , {
+        //   comment: this.state.comment
+        // })
+        .then(res =>{
+          let newChkOut = [...this.state.chkOut]
+          let index = newChkOut.findIndex(item => item.id === dish)
+          newChkOut[index] = res.data[1]
+
+          this.setState({
+            menu: res.data[0],
+            chkOut: newChkOut,
+            userComment: ''
+          }, () => console.log(this.state))
+
+
+          this.handleComment('')
+        })
+        .catch(error =>{
+          console.log(error)
+        })
+  }
+
+  editComment(dish){
+    axios
+        .put(`/api/checkOut/${dish}`, {
+          comment: this.state.comment
+        })
+        .then(res =>{
+          let newChkOut = [...this.state.chkOut]
+          let index = newChkOut.findIndex(item => item.id === dish)
+          newChkOut[index] = res.data[1]
+
+          this.setState({
+            menu: res.data[0],
+            chkOut: newChkOut,
+            userComment: this.state.comment
+          }, () => console.log(this.state))
+
+
+          this.handleComment(res.data[1].comment)
+        })
+        .catch(error =>{
+          console.log(error)
+        })
   }
 
   addToCheck(item){
@@ -101,7 +149,15 @@ class App extends Component {
         </header>
         <section className='menu_display'>
           {showFood ? 
-           <CheckOut removeItem={this.removeItem} chkOut={chkOut} addComment={e=> this.addComment(e)} handleComment={this.handleComment} comment={this.state.userComment}/> 
+           <CheckOut 
+           removeItem={this.removeItem} 
+           chkOut={chkOut} 
+           addComment={e=> this.addComment(e)} 
+           handleComment={this.handleComment} 
+           comment={this.state.userComment}
+           deleteComment={e => this.deleteComment(e)}
+           editComment={e => this.editComment(e)}
+           /> 
             : (menuDisplay)}
         </section>
       </div>

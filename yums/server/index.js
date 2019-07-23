@@ -8,6 +8,8 @@ const url2= "/api/checkOut"
 
 app.get(url1, menuController.getMenu)
 app.post(`${url2}/:dish`, menuController.postComment)
+app.put(`${url2}/:dish`, menuController.editComment)
+app.delete(`${url2}/:dish`, menuController.deleteComment)
 
 const PORT = 8888;
 app.listen(PORT, ()=> {

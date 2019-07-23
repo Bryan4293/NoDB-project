@@ -1,4 +1,4 @@
-const menu = [
+let menu = [
     {
         id: 1,
         image:"https://www.foodrepublic.com/wp-content/uploads/2012/03/033_FR11785.jpg",
@@ -72,7 +72,6 @@ const getMenu = ((req, res) => {
 
 const postComment = ((req,res) => {
     let comment = req.body.comment;
-    console.log(req.params.dish)
     let index = menu.findIndex(dish =>{
         return dish.id == req.params.dish
     })
@@ -81,16 +80,31 @@ const postComment = ((req,res) => {
     res.json(menu)
 });
 
-const editComment = (() => {
-    
+const editComment = ((req, res) => {
+    const id = parseInt(req.params.dish)
+
+    const index = menu.findIndex(item => item.id === id)
+
+    menu[index].comment = req.body.comment
+    res.json([menu, menu[index]])
 });
 
-const deleteComment =(() => {
+const deleteComment =((req, res) => {
 
+    const id = parseInt(req.params.dish)
+
+    const index = menu.findIndex(item => item.id === id)
+
+    menu[index].comment = ''
+    // let comment = req.body.comment
+    // comment.splice(id,1)
+    res.json([menu, menu[index]])
 });
 
 
 module.exports ={
 getMenu,
 postComment,
+editComment,
+deleteComment
 };
